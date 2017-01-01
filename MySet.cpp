@@ -2,6 +2,9 @@
 #include <string>
 #include "MySet.h"
 
+/**
+ * Node class used to represent MySet elements
+ */
 class MySet :: MyNode
 {
 public:
@@ -16,7 +19,23 @@ public:
         weight = myHashFunction(nodeKey);
     }
 };
+MySet ::MySet() {}
 
+/**
+ * destructor method
+ */
+MySet ::~MySet()
+{
+    if (headerNode == nullptr)
+    {
+        return;
+    }
+    while (headerNode->nextNode != nullptr)
+    {
+        this->remove(headerNode->nextNode->key);
+    }
+    delete(headerNode);
+}
 
 /**
  * The hash function.
@@ -40,16 +59,31 @@ int MySet :: myHashFunction(const std::string &str)
     return sum;
 }
 
+/**
+ * compares if two sets weights are equal (according to the totWeight function)
+ * @param set - set we're comparing ourselves with
+ * @return 1 iff weights are equal, 0 otherwise
+ */
 bool MySet :: operator == (const MySet &set)
 {
     return (this->totWeight() == set.totWeight());
 }
 
+/**
+ * compares the weights of two sets
+ * @param set - set we're comparing ourselves with
+ * @return returns 1 iff this weight is less than sets weight
+ */
 bool MySet :: operator < (const MySet &set)
 {
     return (this->totWeight() < set.totWeight());
 }
 
+/**
+ * compares the weights of two sets
+ * @param set - set we're comparing ourselves with
+ * @return returns 1 iff this weight is greater than sets weight
+ */
 bool MySet :: operator > (const MySet &set)
 {
     return (this->totWeight() > set.totWeight());
@@ -57,7 +91,6 @@ bool MySet :: operator > (const MySet &set)
 
 MySet MySet::operator = (const MySet &set)
 {
-    MySet result;
     MyNode* currentNode = headerNode;
     if (headerNode != nullptr)
     {
@@ -65,7 +98,7 @@ MySet MySet::operator = (const MySet &set)
         {
             this->remove(headerNode->nextNode->key);
         }
-        this->remove(headerNode->key);
+        delete(headerNode);
     }
 
     currentNode = set.headerNode;
@@ -74,7 +107,7 @@ MySet MySet::operator = (const MySet &set)
         this->add(currentNode->key, currentNode->value);
         currentNode = currentNode->nextNode;
     }
-    return result;
+    return *this;
 }
 
 MySet MySet::operator - (const MySet &set)
@@ -92,6 +125,11 @@ MySet MySet::operator - (const MySet &set)
     return result;
 }
 
+/**
+ * returns the union of two sets, giving priority to the value of our elements
+ * @param set - the set we're
+ * @return union of two sets
+ */
 MySet MySet::operator | (const MySet &set)
 {
     MySet result = set;
@@ -104,6 +142,11 @@ MySet MySet::operator | (const MySet &set)
     return result;
 }
 
+/**
+ * returns the intersection of two sets
+ * @param set
+ * @return intersection, priority to RHS
+ */
 MySet MySet::operator & (const MySet &set)
 {
     MySet result;
@@ -119,6 +162,12 @@ MySet MySet::operator & (const MySet &set)
     return result;
 }
 
+/**
+ * Remove a string (and it's double) from the MySet.
+ * Return the numbr of removed elements (0/1)
+ * @param key - key of element to remove
+ * @return 1 iff element was removed 0 otherwise
+ */
 int MySet::remove(std::string key)
 {
     MyNode* currentNode = headerNode;
@@ -131,13 +180,17 @@ int MySet::remove(std::string key)
     if (headerNode->key == key)
     {
         headerNode = headerNode->nextNode;
+        delete currentNode;
         return 1;
     }
+    MyNode* next;
     while (currentNode->nextNode != nullptr)
     {
-        if (currentNode->nextNode->key == key)
+        next = currentNode->nextNode;
+        if (next->key == key)
         {
-            currentNode->nextNode = currentNode->nextNode->nextNode;
+            currentNode->nextNode = next->nextNode;
+            delete(next);
             return 1;
         }
         currentNode = currentNode->nextNode;
@@ -159,6 +212,14 @@ bool MySet::isElement(std::string key) const
     return false;
 }
 
+/**
+     * Return true if the element is in the Set, or false otherwise.
+     * If the element exists in the Set, return in 'data' its appropriate data
+     * value. Otherwise don't change the value of 'data'.
+     * @param key - key of element we're checking
+     * @param value - value of element we're checking
+     * @return true if element is in the set, false otherwise
+     */
 bool MySet::isInSet(std::string key, double& value)
 {
     MyNode* currentNode = headerNode;
@@ -198,6 +259,14 @@ double MySet::totWeight() const
     return sum;
 }
 
+/**
+     * Add a string (key) and a double (data) to the MySet.
+     * If the element already exists , change its data to the
+     * input parameter.
+     * @param key - key of new element to add
+     * @param value - value of new element to add
+     * @return 1 if element was added 0 otherwise
+     */
 int MySet::add(std::string key, double value)
 {
     MyNode* newNode = new MyNode(key, value);
@@ -238,10 +307,14 @@ int MySet::add(std::string key, double value)
         currentNode = currentNode->nextNode;
         //std::cout << "Next node key:" << currentNode->key << std::endl;
     }
+    currentNode->value = newNode->value;
     delete newNode;
     return 0;
 }
 
+/**
+     * print Set contents.
+     */
 void MySet :: printSet()
 {
     if (headerNode == nullptr)
