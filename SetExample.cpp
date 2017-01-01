@@ -19,7 +19,7 @@ static double myAbs(double d)
 // Output: true if the two doubles are equal (different smaller than EPSILON), false otherwise.
 static bool isDoublesEq(double d1, double d2)
 {
-
+	
 	if (myAbs(d1-d2) <= EPSILON)
 	{
 		return true;
@@ -34,31 +34,21 @@ int main()
 	MySet mylist;
 	std::string firstWord = "aa";
 	double firstVal = 1.5;
-	std::string secondWord = "bc";
-	double secVal = 15.0;
-	std::string thirdWord = "bb";
-	double thirdVal = 2.2;
-	std::string forthWord = "ab";
-	double forthVal = 1.0;
-
+	std::string secondWord = "bb";
+	double secVal = 2.2;
+	std::string thirdWord = "ab";
+	double thirdVal = 1.0;
 
 	mylist.printSet();
 	std::cout << "Done print list" << std::endl << std::endl;
 
 	mylist.add(firstWord, firstVal);
-	std::cout << "Hello" << std::endl;
 	mylist.add(secondWord, secVal);
-	std::cout << "Hello1" << std::endl;
 	mylist.add(firstWord, thirdVal);
-	std::cout << "Hello2" << std::endl;
 	mylist.add(thirdWord, firstVal);
-	std::cout << "Hello3" << std::endl;
-	mylist.add(forthWord, firstVal);
-	std::cout << "Hello4" << std::endl;
-	mylist.add(forthWord, forthVal);
-
 
 	mylist.printSet();
+	
 	std::cout << "Done print list" << std::endl << std::endl;
 
 	double d;

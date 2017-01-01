@@ -77,6 +77,21 @@ MySet MySet::operator = (const MySet &set)
     return result;
 }
 
+MySet MySet::operator - (const MySet &set)
+{
+    MySet result;
+    MyNode* currentNode = this->headerNode;
+    while(currentNode != nullptr)
+    {
+        if (!set.isElement(currentNode->key))
+        {
+            result.add(currentNode->key, currentNode->value);
+        }
+        currentNode = currentNode->nextNode;
+    }
+    return result;
+}
+
 MySet MySet::operator | (const MySet &set)
 {
     MySet result = set;
@@ -151,7 +166,7 @@ bool MySet::isInSet(std::string key, double& value)
     {
         if (currentNode->key == key)
         {
-            currentNode->value = value;
+            value = currentNode->value;
             return true;
         }
         currentNode = currentNode->nextNode;
@@ -209,7 +224,7 @@ int MySet::add(std::string key, double value)
     {
         if (currentNode->nextNode == nullptr)
         {
-            currentNode->nextNode = currentNode;
+            currentNode->nextNode = newNode;
             return 1;
         }
 
@@ -221,8 +236,9 @@ int MySet::add(std::string key, double value)
             return 1;
         }
         currentNode = currentNode->nextNode;
-        std::cout << "Next node key:" << currentNode->key << std::endl;
+        //std::cout << "Next node key:" << currentNode->key << std::endl;
     }
+    delete newNode;
     return 0;
 }
 
@@ -239,4 +255,16 @@ void MySet :: printSet()
         std::cout << '<' << currentNode->key << ',' << currentNode->value << ">" << std::endl;
         currentNode = currentNode->nextNode;
     }
+}
+
+int MySet :: size()
+{
+    int size = 0;
+    MyNode* currentNode = headerNode;
+    while (currentNode != nullptr)
+    {
+        size++;
+        currentNode = currentNode->nextNode;
+    }
+    return size;
 }

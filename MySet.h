@@ -78,11 +78,15 @@ public:
 
     MySet operator = (const MySet &set);
 
+	MySet operator - (const MySet &set);
+
     bool isElement(std::string key) const;
 
     double totWeight() const;
 
     double sumSet();
+
+	int size();
 
 private:
 
