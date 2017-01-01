@@ -42,8 +42,16 @@ class MySet
 public:
 
     class MyNode;
-    MyNode *headerNode = nullptr;
+    MyNode *headerNode;
+    /**
+     * constructor
+     * @return
+     */
     MySet();
+
+    /**
+     * destructor,
+     */
     ~MySet();
 
     /**
@@ -133,37 +141,37 @@ public:
      * @param set our assigment
      * @return
      */
-    MySet operator = (const MySet &set);
+    MySet& operator = (const MySet &set);
 
     /**
-     *
-     * @param set
-     * @return
+     * returns first set complement the second one
+     * @param set set on the RHS
+     * @return returns first set complement the second one
      */
 	MySet operator - (const MySet &set);
 
     /**
-     *
-     * @param key
-     * @return
+     * checks if key is element of set
+     * @param key - key to check for
+     * @return true iff key is element
      */
     bool isElement(std::string key) const;
 
     /**
-     *
-     * @return
+     * returns sum weights of every set element
+     * @return total weight
      */
     double totWeight() const;
 
     /**
-     *
-     * @return
+     * sums all values in set
+     * @return the sum of all values of all nodes in set
      */
     double sumSet();
 
     /**
-     *
-     * @return
+     * returns the size of the set
+     * @return number of elements in set
      */
 	int size();
 

@@ -19,7 +19,14 @@ public:
         weight = myHashFunction(nodeKey);
     }
 };
-MySet ::MySet() {}
+
+/**
+ * constructor
+ * @return
+ */
+MySet ::MySet() {
+    headerNode = nullptr;
+}
 
 /**
  * destructor method
@@ -89,7 +96,13 @@ bool MySet :: operator > (const MySet &set)
     return (this->totWeight() > set.totWeight());
 }
 
-MySet MySet::operator = (const MySet &set)
+
+/**
+ * assignment operator
+ * @param set our assigment
+ * @return
+ */
+MySet& MySet::operator = (const MySet &set)
 {
     MyNode* currentNode = headerNode;
     if (headerNode != nullptr)
@@ -110,6 +123,11 @@ MySet MySet::operator = (const MySet &set)
     return *this;
 }
 
+/**
+ * returns first set complement the second one
+ * @param set set on the RHS
+ * @return returns first set complement the second one
+ */
 MySet MySet::operator - (const MySet &set)
 {
     MySet result;
@@ -198,6 +216,11 @@ int MySet::remove(std::string key)
     return 0;
 }
 
+/**
+ * checks if key is element of set
+ * @param key - key to check for
+ * @return true iff key is element
+ */
 bool MySet::isElement(std::string key) const
 {
     MyNode* currentNode = headerNode;
@@ -235,6 +258,10 @@ bool MySet::isInSet(std::string key, double& value)
     return false;
 }
 
+/**
+ * sums all values in set
+ * @return the sum of all values of all nodes in set
+ */
 double MySet::sumSet()
 {
     double sum = 0;
@@ -247,6 +274,10 @@ double MySet::sumSet()
     return sum;
 }
 
+/**
+ * returns sum weights of every set element
+ * @return total weight
+ */
 double MySet::totWeight() const
 {
     int sum = 0;
@@ -298,7 +329,7 @@ int MySet::add(std::string key, double value)
         }
 
         if ((currentNode->weight <= newNode->weight)
-             && (newNode->weight < currentNode->nextNode->weight))
+            && (newNode->weight < currentNode->nextNode->weight))
         {
             newNode->nextNode = currentNode->nextNode;
             currentNode->nextNode = newNode;
@@ -330,6 +361,10 @@ void MySet :: printSet()
     }
 }
 
+/**
+ * returns the size of the set
+ * @return number of elements in set
+ */
 int MySet :: size()
 {
     int size = 0;
