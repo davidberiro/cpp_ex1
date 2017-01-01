@@ -78,7 +78,7 @@ public:
 
     MySet operator = (const MySet &set);
 
-    bool isElement(std::string key);
+    bool isElement(std::string key) const;
 
     double totWeight() const;
 

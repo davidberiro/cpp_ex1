@@ -46,10 +46,15 @@ int main()
 	std::cout << "Done print list" << std::endl << std::endl;
 
 	mylist.add(firstWord, firstVal);
+	std::cout << "Hello" << std::endl;
 	mylist.add(secondWord, secVal);
+	std::cout << "Hello1" << std::endl;
 	mylist.add(firstWord, thirdVal);
+	std::cout << "Hello2" << std::endl;
 	mylist.add(thirdWord, firstVal);
+	std::cout << "Hello3" << std::endl;
 	mylist.add(forthWord, firstVal);
+	std::cout << "Hello4" << std::endl;
 	mylist.add(forthWord, forthVal);
 
 
