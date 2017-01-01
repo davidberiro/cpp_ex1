@@ -40,7 +40,11 @@
 class MySet
 {
 public:
-	/**
+
+    class MyNode;
+    MyNode *headerNode = nullptr;
+
+    /**
 	 * The hash function.
 	 * Input parameter - any C++ string.
 	 * Return value: the hash value - the sum of all the characters of the string
@@ -54,6 +58,33 @@ public:
 	 */
 	static int myHashFunction(const std::string &str);
 
+    void printSet();
+
+    int add(std::string key, double value);
+
+    bool isInSet(std::string key, double& value);
+
+    int remove(std::string key);
+
+    bool operator == (const MySet &set);
+
+    bool operator < (const MySet &set);
+
+    bool operator > (const MySet &set);
+
+	MySet operator | (const MySet &set);
+
+	MySet operator & (const MySet &set);
+
+    MySet operator = (const MySet &set);
+
+    bool isElement(std::string key);
+
+    double totWeight() const;
+
+    double sumSet();
+
+private:
 
 };
 
